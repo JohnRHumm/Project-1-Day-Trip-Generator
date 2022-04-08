@@ -14,6 +14,17 @@
 # Functions for activities and restaurants for individual cities
 
 import random
+import os
+
+# This code was taken from the www. Breaks the rule of simple function but not
+# key to program. Just makes things easier to debug
+def clearConsole():
+    command = 'clear'
+    if os.name in ('nt', 'dos'):  # If Machine is running on Windows, use cls
+        command = 'cls'
+    os.system(command)
+
+
 
 def atlanta_activities():
     atlanta_activities_list = ["Falcons' game", 'Marin Luther King Jr. National Historical Park','Georgia Aquarium',\
@@ -46,60 +57,165 @@ def chicago_activities():
 
 def chicago_restaurants():
     chicago_restaurant_list = ['Superdawg Drive-In','Lost Larson',"Luella's Southern Kitchen",'Smoque BBQ','Lula Cafe',\
-        "Johnnie's Beef",'Porto','Lardon','Naudi Signature Pizza']
+        "Johnnie's Beef",'Porto','Lardon','Naudi Signature Pizza','The Walnut Room']
     return chicago_restaurant_list
 
-def random_choice_from_list(input_list):
-    random_item = random.choice(input_list)
-    return random_item
+def houston_activities():
+    houston_activities_list = ["Texans' game", 'Space Center Houston','National Museum of Funeral History',\
+        'The Museum of Fine Arts, Houston','Houston Museum of Natural Science','The Hobby Center',\
+        'San Jacinto Monument and Museum','Gerald D. Hines Waterwall Park', 'Beer Can House','Twilight Epiphany Skyspace']
+    return  houston_activities_list
+
+def houston_restaurants():
+    houston_restaurant_list = ["Ninfa's Original on Navigation",'La Carafe',"Saigon Hustle",'Underelly Burger','Loro',\
+        "Trattoria Sofia",'Chivos','Casa Nomad','Maize','Urbe']
+    return houston_restaurant_list
+
+def kansas_city_activities():
+    kansas_city_activities_list = ["Chiefs' game", 'National World War I Museum and Memorial',\
+        'Boulevard Brewery','Nelson-Atkins Museum of Art','City Market','American Jazz Museum',\
+        'Erinie Miller Nature Center','Blue Room Jazz Club', 'Worlds of Fun']
+    return  kansas_city_activities_list
+
+def kansas_city_restaurants():
+    kansas_city_restaurant_list = ["Joe's Kansas City Barbeque",'Jones BBQ',"Covino Supper Club",'Char Bar','Gram & Dun',\
+        "Pirate's Bone Burgers","Lidia's",'Pigwich','The Rieger',"Mickey's Hideaway"]
+    return kansas_city_restaurant_list
+
+
+
 
 # Define city list and methods of travel
-city_list = ['Atlanta','Boston','Chicago']
+city_list = ['Atlanta','Boston','Chicago','Houston','Kansas City']
 
-type_of_travel_list = ['Uber','Rental Car','Train','Skateboard','Bicycle','Segway',\
-    'Foot','Electric Scooter','Rickshaw','Rollerblades']
+transportation_list = ['Uber','Rental Car','Train','Skateboard','Bicycle','Segway',\
+    'Moped','Electric Scooter','Rickshaw','Rollerblades']
 
+clearConsole()
 
 # Determine City
 print('Welcome to Vacation Planner 2022. Your automated trip planner')
 user_city_list = city_list
 user_happy_with_city = False
+user_happy_with_activity = False
 items_left_in_city_list = len(user_city_list)
-no_count = 0
+city_no_count = 0
+refresh_city_list = True
+refresh_activity_list = True
+refresh_restaurant_list = True
+refresh_transportation_list = True
+user_undecided = True
 
-while user_happy_with_city == False and items_left_in_city_list > 0:
-    #destination = random_choice_from_list(user_city_list)
-    destination = random.choice(user_city_list)
-    if no_count == 0:
-        print(f'Your destination city is: {destination}')
+while user_undecided:
+    # Select City    
+    while user_happy_with_city == False and items_left_in_city_list > 0:
+        if refresh_city_list:
+            user_city_list = city_list
+        destination = random.choice(user_city_list)
+        if items_left_in_city_list == 1:
+            print('You are very particular. Only one city left in the list')
+        if city_no_count == 0:
+            print(f'Your destination city is: {destination}')
+            refresh_city_list = False
+        else:
+            print(f'Your new destimation city is: {destination}')
+        
+        user_response = input(f'Do you accept {destination} as your destination city? (y/n): ')   
+        if user_response.capitalize() == 'Y':
+            user_happy_with_city = True
+            print('Destination city accepted!')
+            print(f'Welcome to {destination}') # add city slogan if time
+        else:
+            print('A new destination city will be selected')
+            print(f'{destination} has been removed as an option')
+            user_city_list.remove(destination)
+            items_left_in_city_list = len(user_city_list)
+            city_no_count +=1
+        if items_left_in_city_list == 0:
+            print("No cities left to choose. Looks like you'll be at home.")
+            print('Enjoy your Staycation!')
+            destination = 'Home'
+            user_happy_with_city = True
+
+    # Get custom activity and restaurant list
+    if destination == 'Atlanta':
+        if refresh_activity_list:
+            user_activity_list = atlanta_activities()
+            refresh_activity_list = False
+        if refresh_restaurant_list:
+            user_restaurant_list = atlanta_restaurants()
+            refresh_restaurant_list = False
+    elif destination == 'Boston':
+        if refresh_activity_list:
+            user_activity_list = boston_activities()
+            refresh_activity_list = False
+        if refresh_restaurant_list:
+            user_restaurant_list = boston_restaurants()
+            refresh_restaurant_list = False
+    elif destination == 'Chicago':
+        if refresh_activity_list:
+            user_activity_list = chicago_activities()
+            refresh_activity_list = False
+        if refresh_restaurant_list:
+            user_restaurant_list = chicago_restaurants()
+            refresh_restaurant_list = False
+    elif destination == 'Houston':
+        if refresh_activity_list:
+            user_activity_list = houston_activities()
+            refresh_activity_list = False
+        if refresh_restaurant_list:
+            user_restaurant_list = houston_restaurants()
+            refresh_restaurant_list = False
+    elif destination == 'Kansas City':
+        if refresh_activity_list:
+            user_activity_list = kansas_city_activities()
+            refresh_activity_list = False
+        if refresh_restaurant_list:
+            user_restaurant_list = kansas_city_restaurants()
+            refresh_restaurant_list = False
     else:
-        print(f'Your new destimation city is: {destination}')
-    user_response = input(f'Do you accept {destination} as your destination city? (y/n): ')   
-    if user_response.capitalize == 'Y':
-        user_happy_with_city = True
-        print('Destination city accepted!')
-        print('Welcome to') # add city slogan if time
-    else:
-        print('A new destination city will be selected')
-        print(f'{destination} has been removed as an option')
-        user_city_list.remove(destination)
-        items_left_in_city_list = len(user_city_list)
-        no_count +=1
-    if items_left_in_city_list == 0:
-        print("No cities left to choose. Looks like you'll be at home.")
-        print('Enjoy your Staycation!')
-        destination = 'Home'
+        user_activity_list = {'Sitting on couch'}
+        user_restaurant_list = {"McDonald's"}
+        refresh_activity_list = False
+        refresh_restaurant_list = False
+    
+    # Now Select Activity
+    items_left_in_activity_list = len(user_activity_list)
+    activity_no_count = 0
+    
+    while user_happy_with_activity == False and items_left_in_activity_list > 0:
+        activity = random.choice(user_activity_list)
+        if items_left_in_activity_list == 1:
+            print('You are very particular. Only one activity left in the list')
+        if activity_no_count == 0:
+            print(f'Your activity is : {activity}')
+            refresh_activity_list = False
+        else:
+            print(f'Your new activity is: {activity}')
+        
+        user_response = input(f'Do you accept {activity} as your activity? (y/n): ')   
+        if user_response.capitalize() == 'Y':
+            user_happy_with_activity = True
+            print('Activity accepted!')
+            print(f'Enjoy {activity}') 
+        else:
+            print('A new activity will be selected')
+            print(f'{activity} has been removed as an option')
+            user_activity_list.remove(activity)
+            items_left_in_activity_list = len(user_activity_list)
+            activity_no_count +=1
+        if items_left_in_activity_list == 0:
+            print("No activities left to choose.")
+            print("Enjoy McDonald's")
+            destination = "McDonald's"
+            user_happy_with_activity = True
 
 
-
+    items_left_in_restaurant_list = len(user_restaurant_list)
         
         
 
 
 
 
-activities_list = atlanta_activities()
-print(activities_list)
 
-restaurant_list = atlanta_restaurants()
-print(restaurant_list)
