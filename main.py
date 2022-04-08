@@ -12,6 +12,9 @@
 # (5 points):  As a developer, I want all of my functions to have a Single Responsibility. Remember, each function should do just one thing!
 
 # Functions for activities and restaurants for individual cities
+
+import random
+
 def atlanta_activities():
     atlanta_activities_list = ["Falcons' game", 'Marin Luther King Jr. National Historical Park','Georgia Aquarium',\
         'Atlanta Botanical Garden','World of Coca-Cola','High Museum of Art', 'Center for Puperty Arts',\
@@ -46,11 +49,51 @@ def chicago_restaurants():
         "Johnnie's Beef",'Porto','Lardon','Naudi Signature Pizza']
     return chicago_restaurant_list
 
-# Define city list and methods of travel
-city_list = {'Atlanta','Boston','Chicago'}
+def random_choice_from_list(input_list):
+    random_item = random.choice(input_list)
+    return random_item
 
-type_of_travel_list = {'Uber','Rental Car','Train','Skateboard','Bicycle','Segway',\
-    'Foot','Electric Scooter','Rickshaw','Rollerblades'}
+# Define city list and methods of travel
+city_list = ['Atlanta','Boston','Chicago']
+
+type_of_travel_list = ['Uber','Rental Car','Train','Skateboard','Bicycle','Segway',\
+    'Foot','Electric Scooter','Rickshaw','Rollerblades']
+
+
+# Determine City
+print('Welcome to Vacation Planner 2022. Your automated trip planner')
+user_city_list = city_list
+user_happy_with_city = False
+items_left_in_city_list = len(user_city_list)
+no_count = 0
+
+while user_happy_with_city == False and items_left_in_city_list > 0:
+    #destination = random_choice_from_list(user_city_list)
+    destination = random.choice(user_city_list)
+    if no_count == 0:
+        print(f'Your destination city is: {destination}')
+    else:
+        print(f'Your new destimation city is: {destination}')
+    user_response = input(f'Do you accept {destination} as your destination city? (y/n): ')   
+    if user_response.capitalize == 'Y':
+        user_happy_with_city = True
+        print('Destination city accepted!')
+        print('Welcome to') # add city slogan if time
+    else:
+        print('A new destination city will be selected')
+        print(f'{destination} has been removed as an option')
+        user_city_list.remove(destination)
+        items_left_in_city_list = len(user_city_list)
+        no_count +=1
+    if items_left_in_city_list == 0:
+        print("No cities left to choose. Looks like you'll be at home.")
+        print('Enjoy your Staycation!')
+        destination = 'Home'
+
+
+
+        
+        
 
 
 
