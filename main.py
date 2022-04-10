@@ -75,7 +75,7 @@ def houston_restaurants():
 def kansas_city_activities():
     kansas_city_activities_list = ["Chiefs' game", 'National World War I Museum and Memorial',\
         'Boulevard Brewery','Nelson-Atkins Museum of Art','City Market','American Jazz Museum',\
-        'Erinie Miller Nature Center','Blue Room Jazz Club', 'Worlds of Fun']
+        'Erinie Miller Nature Center','Blue Room Jazz Club', 'Worlds of Fun','Kemper Museum of Contemporary Art']
     return  kansas_city_activities_list
 
 def kansas_city_restaurants():
@@ -83,8 +83,37 @@ def kansas_city_restaurants():
         "Pirate's Bone Burgers","Lidia's",'Pigwich','The Rieger',"Mickey's Hideaway"]
     return kansas_city_restaurant_list
 
+def seattle_activities():
+    seattle_activities_list = ["Seahwaks' game", 'Mt. Rainer Day Trip',\
+        'Beneath the streets Underground History Tour','Pike Place Market','Olympic National Park Tour','The Museum of Flight',\
+        'Chihuly Garden and Glass','Woodland Park Zoo', 'Space Needle','Museum of Pop Culture']
+    return  seattle_activities_list
+
+def seattle_restaurants():
+    seattle_restaurant_list = ["Simburna Indian Restaurant","Zylberschtein's","Cafe Juanita",'Cafe Munir','Canlis',\
+        "Archipelago","Meesha",'Sushi Kaskiba','Bar del Coro',"Super Six"]
+    return seattle_restaurant_list
+
+def city_nickname(city):
+    if city == 'Atlanta':
+        nickname = "Hot'Lanta"
+    elif city == 'Boston':
+        nickname = "Beantown"
+    elif city == 'Chicago':
+        nickname = "The Windy City"
+    elif city == 'Houston':
+        nickname = 'Space City'
+    elif city == 'Kansas City':
+        nickname = 'Cowtown'
+    elif city == 'Seattle':
+        nickname = 'Emerald City'
+    else:
+        nickame = ''
+    return nickname
+
+
 def cities():
-    city_list = ['Atlanta','Boston','Chicago','Houston','Kansas City'] 
+    city_list = ['Atlanta','Boston','Chicago','Houston','Kansas City','Seattle'] 
     return city_list
 
 def transportation_type():
@@ -115,7 +144,7 @@ def get_y_or_n_from_user(input_message):
 clearConsole()
 
 
-print('Welcome to Vacation Planner 2022. Your automated trip planner')
+print("Welcome to Vacation Planner 2022, your automated trip planner")
 
 # Initial settings
 
@@ -142,27 +171,29 @@ rejected_transportation_list = []
 
 while user_undecided:
     # Select City 
-    print('Selecting Destination City')
+    
     if refresh_city_list:
-            user_city_list = cities()
-            refresh_city_list = False
-    items_left_in_city_list = len(user_city_list)   
+         user_city_list = cities()
+         refresh_city_list = False
+    items_left_in_city_list = len(user_city_list)
+    if user_happy_with_city == False:
+        print('Selecting Destination City')
     while user_happy_with_city == False and items_left_in_city_list >= 0:
         if items_left_in_city_list > 0:
             destination = random.choice(user_city_list)
             if items_left_in_city_list == 1:
                 print('You are very particular. Only one city left in the list')
             if city_no_count == 0:
-                print(f'Your destination city is: {destination}')
+                print(f'Your destination city is: {destination.upper()}')
             else:
-                print(f'Your new destimation city is: {destination}')
+                print(f'Your new destimation city is: {destination.upper()}')
            
             message_to_user = (f'Do you accept {destination} as your destination city? (y/n): ')
             user_response = (get_y_or_n_from_user(message_to_user)).upper()
             if user_response == 'Y':
                 user_happy_with_city = True
                 print('Destination city accepted!')
-                print(f'Welcome to {destination}') # add city slogan if time
+                print(f'Welcome to {city_nickname(destination)}') # add city slogan if time
                 print('----------')
                 print('')
             else:
@@ -219,6 +250,13 @@ while user_undecided:
         if refresh_restaurant_list:
             user_restaurant_list = kansas_city_restaurants()
             refresh_restaurant_list = False
+    elif destination == 'Seattle':
+        if refresh_activity_list:
+            user_activity_list = seattle_activities()
+            refresh_activity_list = False
+        if refresh_restaurant_list:
+            user_restaurant_list = seattle_restaurants()
+            refresh_restaurant_list = False
     else:
         activity = 'Sitting on Couch'
         restaurant = "Mc'Donalds"
@@ -233,17 +271,18 @@ while user_undecided:
         rejected_transportation_list = transportation_type()
     
     # Now Select Activity
-    print('Selecting Activity')
     items_left_in_activity_list = len(user_activity_list)
+    if user_happy_with_activity == False:
+        print(f'Selecting Activity in {destination}')
     while user_happy_with_activity == False and items_left_in_activity_list >= 0:
-        if items_left_in_activity_list > 0:
+         if items_left_in_activity_list > 0:
             activity = random.choice(user_activity_list)
             if items_left_in_activity_list == 1:
                 print('You are very particular. Only one activity left in the list')
             if activity_no_count == 0:
-                print(f'Your activity is : {activity}')
+                print(f'Your activity is : {activity.upper()}')
             else:
-                print(f'Your new activity is: {activity}')
+                print(f'Your new activity is: {activity.upper()}')
             message_to_user = (f'Do you accept {activity} as your activity? (y/n): ')
             user_response = (get_y_or_n_from_user(message_to_user)).upper()
             if user_response == 'Y':
@@ -260,25 +299,26 @@ while user_undecided:
                 items_left_in_activity_list = len(user_activity_list)
                 activity_no_count +=1
                 rejected_activity_list.append(activity) 
-        else:
+         else:
             print("No activities left to choose.")
             print("Enjoy sitting your behind on your couch!")
             activity = "Sitting on Couch"
             user_happy_with_activity = True
 
     # Now Select Restaurant
-    print('Selecting Restaurant')
     items_left_in_restaurant_list = len(user_restaurant_list)
+    if user_happy_with_restaurant == False:
+        print(f'Selecting Restaurant in {destination}')
     while user_happy_with_restaurant == False and items_left_in_restaurant_list >= 0:
         if items_left_in_restaurant_list > 0:
             restaurant = random.choice(user_restaurant_list)
             if items_left_in_restaurant_list == 1:
                 print('You are very particular. Only one restaurant left in the list')
             if restaurant_no_count == 0:
-                print(f'Your restaurant is : {restaurant}')
+                print(f'Your restaurant is : {restaurant.upper()}')
                 refresh_restaurant_list = False
             else:
-                print(f'Your new restaurant is: {restaurant}')
+                print(f'Your new restaurant is: {restaurant.upper()}')
             message_to_user = (f'Do you accept {restaurant} as your restaurant? (y/n): ')
             user_response = get_y_or_n_from_user(message_to_user)
             if user_response.upper() == 'Y':
@@ -302,21 +342,22 @@ while user_undecided:
             user_happy_with_restaurant = True
 
     # Now Select Transportation
-    print('Selecting Method of Transportation around {destination}')
     if refresh_transportation_list:
         user_transportation_list = transportation_type()
         refresh_transportation_list = False
     items_left_in_transportation_list = len(user_transportation_list)
+    if user_happy_with_transportation == False:
+        print(f'Selecting Method of Transportation around {destination}')
     while user_happy_with_transportation == False and items_left_in_transportation_list >= 0:
         if items_left_in_transportation_list > 0:
             transportation = random.choice(user_transportation_list)
             if items_left_in_transportation_list == 1:
                 print('You are very particular. Only one method of transportation left in the list')
             if transportation_no_count == 0:
-                print(f'Your method of transportation is : {transportation}')
+                print(f'Your method of transportation is : {transportation.upper()}')
                 refresh_transportation_list = False
             else:
-                print(f'Your new method of transportation is: {transportation}')
+                print(f'Your new method of transportation is: {transportation.upper()}')
             message_to_user = (f'Do you accept {transportation} as your method of transportation? (y/n): ')
             user_response = get_y_or_n_from_user(message_to_user)
             if user_response.upper() == 'Y':
@@ -326,6 +367,7 @@ while user_undecided:
                 print('----------')
                 print('')
             else:
+                print(" ")
                 print('A new method of transportation will be selected')
                 print(f'{transportation} has been removed as an option')
                 user_transportation_list.remove(transportation)
@@ -474,19 +516,25 @@ while user_undecided:
 
 if not destination == 'Home':
      print(" ")
-     message_to_user = (f"Enjoy your trip to {destination}, where you will get around the city by "
+     print(" ")
+     message_to_user = (f"Enjoy your trip to {destination}, {city_nickname(destination)}, where you will get around the city by "
         f"{transportation}.")
      print(message_to_user)
      message_to_user =(f"During the day you will go to the/a {activity}. You will finsh your day "
         f"by dining at {restaurant}.")
      print(message_to_user)
      print("Please enjoy your trip and thank you for using the 2022 Trip Planner")
+     print(" ")
+     print(" ")
      
 else:
+     print(" ")
      print(" ")
      message_to_user = ("Looks like you will be staying at home on your couch eating McDonald's and "
         "walking around on foot. Enjoy!")
      print(message_to_user)
+     print(" ")
+     print(" ")
 
 
 
