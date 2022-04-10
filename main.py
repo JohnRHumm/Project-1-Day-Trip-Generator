@@ -41,7 +41,7 @@ def atlanta_restaurants():
 def boston_activities():
     boston_activities_list = ['Red Sox game', "Patriots' game",'Boston Marathon',\
         'Boston Tea Party Ships & Museum','John F. Kennedy Presidential Museum and Library',\
-            'Museum of Science', 'Isabela Steward Gardner Museum','Samuel Adams Brewery',\
+            'Museum of Science', 'Isabella Steward Gardner Museum','Samuel Adams Brewery',\
             'New England Aquarium', 'Castle Island']
     return  boston_activities_list
 
@@ -94,6 +94,18 @@ def seattle_restaurants():
         "Archipelago","Meesha",'Sushi Kaskiba','Bar del Coro',"Super Six"]
     return seattle_restaurant_list
 
+def nashville_activities():
+    nashville_activities_list = ["Titans' game", 'The Johnny Cash Museum',\
+        'Country Music Hall of Fame and Museum','Shelby Bottoms Nature Center & Greenway','Tennesse State Museum',\
+        "Tootsie's Orchid Lounge",'Radnor Lake State Park', 'National Museum of African American Music',\
+            "Nelson's Green Brier Distillery",'Belle Meade History Site & Winery']
+    return  nashville_activities_list
+
+def nashville_restaurants():
+    nashville_restaurant_list = ["Rosie Food & Wine","Lou Nashville","Pelican & Pig",'East Side Banh Mi','Folk',\
+        "Redheaded Stranger","Lyra",'Peninsula','City House',"Big Al's Deli"]
+    return nashville_restaurant_list
+
 def city_nickname(city):
     if city == 'Atlanta':
         nickname = "Hot'Lanta"
@@ -107,13 +119,15 @@ def city_nickname(city):
         nickname = 'Cowtown'
     elif city == 'Seattle':
         nickname = 'Emerald City'
+    elif city == 'Nashville':
+        nickname = 'Music City'
     else:
         nickame = ''
     return nickname
 
 
 def cities():
-    city_list = ['Atlanta','Boston','Chicago','Houston','Kansas City','Seattle'] 
+    city_list = ['Atlanta','Boston','Chicago','Houston','Kansas City','Nashville','Seattle'] 
     return city_list
 
 def transportation_type():
@@ -140,12 +154,6 @@ def get_y_or_n_from_user(input_message):
     return user_input
 
 
-
-clearConsole()
-
-
-print("Welcome to Vacation Planner 2022, your automated trip planner")
-
 # Initial settings
 
 user_happy_with_city = False
@@ -168,10 +176,11 @@ rejected_restaurant_list = []
 rejected_transportation_list = []
 
 # Main Loop
+clearConsole()
+print("Welcome to Vacation Planner 2022, your automated trip planner")
 
 while user_undecided:
     # Select City 
-    
     if refresh_city_list:
          user_city_list = cities()
          refresh_city_list = False
@@ -256,6 +265,13 @@ while user_undecided:
             refresh_activity_list = False
         if refresh_restaurant_list:
             user_restaurant_list = seattle_restaurants()
+            refresh_restaurant_list = False
+    elif destination == 'Nashville':
+        if refresh_activity_list:
+            user_activity_list = nashville_activities()
+            refresh_activity_list = False
+        if refresh_restaurant_list:
+            user_restaurant_list = nashville_restaurants()
             refresh_restaurant_list = False
     else:
         activity = 'Sitting on Couch'
