@@ -53,7 +53,7 @@ def boston_restaurants():
 def chicago_activities():
     chicago_activities_list = ["Cubs' game", "Bears' game",'Willis Tower',\
         'Magnificient Mile','The Bean','Shedd Aquarium','Field Museum',\
-            'Adler Planetarium', 'Lincoln Park Zoo','Museum of Scinece and Industry']
+            'Adler Planetarium', 'Lincoln Park Zoo','Museum of Science and Industry']
     return  chicago_activities_list
 
 def chicago_restaurants():
@@ -142,6 +142,7 @@ rejected_transportation_list = []
 
 while user_undecided:
     # Select City 
+    print('Selecting Destination City')
     if refresh_city_list:
             user_city_list = cities()
             refresh_city_list = False
@@ -165,6 +166,7 @@ while user_undecided:
                 print('----------')
                 print('')
             else:
+                print(" ")
                 print('A new destination city will be selected')
                 print(f'{destination} has been removed as an option')
                 user_city_list.remove(destination)
@@ -231,6 +233,7 @@ while user_undecided:
         rejected_transportation_list = transportation_type()
     
     # Now Select Activity
+    print('Selecting Activity')
     items_left_in_activity_list = len(user_activity_list)
     while user_happy_with_activity == False and items_left_in_activity_list >= 0:
         if items_left_in_activity_list > 0:
@@ -250,6 +253,7 @@ while user_undecided:
                 print('----------')
                 print('')
             else:
+                print(" ")
                 print('A new activity will be selected')
                 print(f'{activity} has been removed as an option')
                 user_activity_list.remove(activity)
@@ -263,6 +267,7 @@ while user_undecided:
             user_happy_with_activity = True
 
     # Now Select Restaurant
+    print('Selecting Restaurant')
     items_left_in_restaurant_list = len(user_restaurant_list)
     while user_happy_with_restaurant == False and items_left_in_restaurant_list >= 0:
         if items_left_in_restaurant_list > 0:
@@ -283,6 +288,7 @@ while user_undecided:
                 print('----------')
                 print('')
             else:
+                print(" ")
                 print('A new restaurant will be selected')
                 print(f'{restaurant} has been removed as an option')
                 user_restaurant_list.remove(restaurant)
@@ -296,6 +302,7 @@ while user_undecided:
             user_happy_with_restaurant = True
 
     # Now Select Transportation
+    print('Selecting Method of Transportation around {destination}')
     if refresh_transportation_list:
         user_transportation_list = transportation_type()
         refresh_transportation_list = False
@@ -357,7 +364,9 @@ while user_undecided:
         valid_response = False
         while valid_response == False:
             if destination == 'Home':
-                print("You currently haven't selected a city and are staying home. If you wnat to change your trip you need to select a valid destination first")
+                message_to_user = ("You currently haven't selected a city and are staying home. " 
+                    "If you wnat to change your trip you need to select a valid destination first.") 
+                print(message_to_user)
                 user_input = input('Please type (D) to change your destination: ').upper()
                 if user_input == 'D':
                     valid_response = True
@@ -368,7 +377,8 @@ while user_undecided:
                 if user_input == 'D' or user_input == 'A' or user_input == 'R' or user_input == 'T':
                     valid_response = True
         if user_input == 'D':
-            message_to_user = (f'Keep in mind if you change your destination, your activity and restaurant will change too. Do you still want to change? (y/n): ')
+            message_to_user = ("Keep in mind if you change your destination, your activity and "
+                "restaurant will change too. Do you still want to change? (y/n): ")
             user_response = (get_y_or_n_from_user(message_to_user)).upper()
             if user_response == 'Y':
                  if not destination == 'Home':
@@ -384,7 +394,7 @@ while user_undecided:
                  rejected_activity_list = []
                  rejected_restaurant_list = []
                  print(f'Your list of rejected cities are {rejected_city_list}')
-                 message_to_user = (f'Do you want keep these cities on your rejected list (y/n): ')
+                 message_to_user = ('Do you want keep these cities on your rejected list (y/n): ')
                  user_response_2nd = (get_y_or_n_from_user(message_to_user)).upper()
                  if user_response_2nd == 'Y':
                      refresh_city_list = False
@@ -392,10 +402,11 @@ while user_undecided:
                      refresh_city_list = True
                      rejected_city_list = []
                      city_no_count = 0
+                 print(" ")
             else:
                 continue
         elif user_input == 'A':
-             message_to_user = (f'Do you want to change your activity? (y/n): ')    
+             message_to_user = ('Do you want to change your activity? (y/n): ')    
              user_response = (get_y_or_n_from_user(message_to_user)).upper()
              if user_response == 'Y':
                  if not activity == 'Sitting on Couch':
@@ -403,7 +414,7 @@ while user_undecided:
                     rejected_activity_list.append(activity)
                  user_happy_with_activity = False
                  print(f'Your list of rejected activities are {rejected_activity_list}')
-                 message_to_user = (f'Do you want keep these activities on your rejected list (y/n): ')
+                 message_to_user = ('Do you want keep these activities on your rejected list (y/n): ')
                  user_response_2nd = (get_y_or_n_from_user(message_to_user)).upper()
                  if user_response_2nd == 'Y':
                      refresh_activity_list = False
@@ -411,10 +422,11 @@ while user_undecided:
                      refresh_activity_list = True
                      rejected_activity_list = []
                      activity_no_count = 0
+                 print(" ")
              else:
                  continue
         elif user_input == 'R':
-             message_to_user = (f'Do you want to change your restaurant? (y/n): ')    
+             message_to_user = ('Do you want to change your restaurant? (y/n): ')    
              user_response = (get_y_or_n_from_user(message_to_user)).upper()
              if user_response == 'Y':
                  if not restaurant == "McDonald's":
@@ -422,7 +434,7 @@ while user_undecided:
                     rejected_restaurant_list.append(restaurant)
                  user_happy_with_restaurant = False
                  print(f'Your list of rejected restaurants are {rejected_restaurant_list}')
-                 message_to_user = (f'Do you want keep these restaurants on your rejected list (y/n): ')
+                 message_to_user = ('Do you want keep these restaurants on your rejected list (y/n): ')
                  user_response_2nd = (get_y_or_n_from_user(message_to_user)).upper()
                  if user_response_2nd == 'Y':
                      refresh_restaurant_list = False
@@ -430,10 +442,11 @@ while user_undecided:
                      refresh_restaurant_list = True
                      rejected_restaurant_list = []
                      restaurant_no_count = 0
+                 print(" ")
              else:
                  continue
         elif user_input == 'T':
-             message_to_user = (f'Do you want to change your method of trasnportation? (y/n): ')    
+             message_to_user = ('Do you want to change your method of trasnportation? (y/n): ')    
              user_response = (get_y_or_n_from_user(message_to_user)).upper()
              if user_response == 'Y':
                  if not transportation == "Walking":
@@ -449,6 +462,7 @@ while user_undecided:
                      refresh_transportation_list = True
                      rejected_transportation_list = []
                      transportation_no_count = 0
+                 print(" ")
              else:
                  continue
         else:
@@ -456,6 +470,23 @@ while user_undecided:
             err = -1
             break
 
+# Now Print final message to user
+
+if not destination == 'Home':
+     print(" ")
+     message_to_user = (f"Enjoy your trip to {destination}, where you will get around the city by "
+        f"{transportation}.")
+     print(message_to_user)
+     message_to_user =(f"During the day you will go to the/a {activity}. You will finsh your day "
+        f"by dining at {restaurant}.")
+     print(message_to_user)
+     print("Please enjoy your trip and thank you for using the 2022 Trip Planner")
+     
+else:
+     print(" ")
+     message_to_user = ("Looks like you will be staying at home on your couch eating McDonald's and "
+        "walking around on foot. Enjoy!")
+     print(message_to_user)
 
 
 
